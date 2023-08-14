@@ -3,7 +3,7 @@ import os
 
 
 
-with open(r"C:\Users\Natsufire\Desktop\python_bullshit\input\test.txt","r") as file:
+with open(r"your path","r") as file:
     text = file.read()
 
 # Traitement du texte
