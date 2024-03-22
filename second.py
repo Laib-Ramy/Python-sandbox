@@ -1,7 +1,7 @@
 import time
 import datetime
-import json
 import sys
+
 def seconds_to_timer(seconds):
     days = seconds // 86400
     hours = (seconds % 86400) // 3600
@@ -38,10 +38,15 @@ def main():
     while True:
         DR=weekends_remaining()
         data = {
-    "Temps restant dans l'annee": seconds_to_timer(seconds_left()),
-    "Temps Libre restant dans l'annee": seconds_to_timer(free_seconds_left(DR))
+                "Temps restant dans l'annee": {
+                    "calendar":seconds_to_timer(seconds_left()),
+                    "seconds":seconds_left()},
+                "Temps Libre restant dans l'annee": {
+                    "calendar":seconds_to_timer(free_seconds_left(DR)),
+                    "seconds":free_seconds_left(DR)}
         }
-        print(data, flush=True)
+
+        print("\r",data,end="",flush=True)
         time.sleep(1)  # Attend une seconde avant la prochaine mise à jour du timer
 if __name__ == "__main__":
     main()
