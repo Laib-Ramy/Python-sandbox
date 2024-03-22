@@ -43,6 +43,5 @@ def main():
         }
         print(data, flush=True)
         time.sleep(1)  # Attend une seconde avant la prochaine mise à jour du timer
-        sys.stdout.flush()
 if __name__ == "__main__":
     main()
