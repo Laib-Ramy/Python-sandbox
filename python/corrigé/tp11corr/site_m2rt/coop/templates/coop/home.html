@@ -1,0 +1,73 @@
+<html>
+
+<head>
+  <style>
+    body {
+      text-align: center;
+
+    }
+
+    table {
+      border: 1px solid black;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    th,
+    td {
+      border: 1px solid black;
+    }
+  </style>
+</head>
+
+<body>
+
+
+
+  <div>
+    {% if user.is_authenticated %}
+    <h1>Page personnelle de {{user.first_name}} {{user.last_name}}</h1>
+    <form action="{% url 'logout' %}" method="post">
+      {% csrf_token %}
+      <input type="submit" value="Logout" />
+    </form>
+    <h2>Vous possedez les outils suivants:</h2>
+    <form action="{% url 'delete-tools' %}" method="post">
+      {% csrf_token %}
+      <table>
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Desciption</th>
+            <th>Prix</th>
+            <th><input type="submit" value="Supprimer" /></th>
+          </tr>
+        </thead>
+        {% for tool in user.tool_set.all %}
+        <tr>
+          <td>{{tool.id}}</td>
+          <td>{{tool}}</td>
+          <td>{{tool.price}}</td>
+          <td><input type="checkbox" value="{{tool.id}}" name="to_delete" /></td>
+        </tr>
+        {% endfor %}
+      </table>
+    </form>
+    <h2>Ajouter un outil:</h2>
+    <form action="{% url 'add-tool' %}" method="post">
+      {% csrf_token %}
+      <table>
+        {{ addform.as_table }}
+      </table>
+      <input type="submit" value="Ajouter" />
+    </form>
+
+    {% else %}
+    <h1>Hello, guest!</h1>
+    <a href="{% url 'login' %}">Login</a>
+    {% endif %}
+  </div>
+
+</body>
+
+</html>
